@@ -74,7 +74,7 @@ router.get("/sneakers/:id", (req, res) => {
 
 // delete
 
-router.delete("/musicians/:id", (req, res) => {
+router.delete("/sneakers/:id", (req, res) => {
   console.table(req.params);
   Sneakers.deleteOne({ id: req.params.id }, function (err, result) {
     // res.json({ result: true });
