@@ -6,6 +6,7 @@ const conn = require("./connection");
 
 // One model per collection
 const Sneakers = require("./models/sneakers-model");
+const Comments = require("./models/comments-model");
 
 const app = express();
 app.use(bodyParser.json());
@@ -47,7 +48,7 @@ app.get("/hi", function (req, res) {
 const router = express.Router();
 app.use("/api", router);
 
-// get all
+// get all item 
 router.get("/sneakers", (req, res) => {
   console.log("Sneakers requested");
   Sneakers.find().then(
@@ -59,6 +60,21 @@ router.get("/sneakers", (req, res) => {
     }
   );
 });
+
+
+// get all comments
+router.get("/comments", (req, res) => {
+  console.log("comments requested");
+  Comments.find().then(
+    (commentsArray) => {
+      res.json(commentsArray);
+    },
+    () => {
+      res.json({ result: false });
+    }
+  );
+});
+
 
 // find and return a single user based upon id - not _id
 router.get("/sneakers/:id", (req, res) => {
@@ -72,7 +88,19 @@ router.get("/sneakers/:id", (req, res) => {
   );
 });
 
-// delete
+// find and return a single user based upon id - not _id
+router.get("/comments/:id", (req, res) => {
+  customElements.findOne({ id: req.params.id }).then(
+    (sneakersArray) => {
+      res.json(commentsArray);
+    },
+    () => {
+      res.json({ result: false });
+    }
+  );
+});
+
+// delete item
 
 router.delete("/sneakers/:id", (req, res) => {
   console.table(req.params);
@@ -86,6 +114,23 @@ router.delete("/sneakers/:id", (req, res) => {
     }
   });
 });
+
+
+// delete comments
+
+router.delete("/comments/:id", (req, res) => {
+  console.table(req.params);
+  Comments.deleteOne({ id: req.params.id }, function (err, result) {
+    // res.json({ result: true });
+    // res.send(err);
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 
 // CREATE new 
 
@@ -114,7 +159,39 @@ router.post("/sneakers", (req, res) => {
   );
 });
 
-// end CREATE new writer
+
+
+
+
+// CREATE new comments
+
+router.post("/comments", (req, res) => {
+  // create instance writer model
+
+  var newreview = new Comments();
+  var reactForm = req.body;
+
+  // copy form data into instance. nice.
+
+  Object.assign(newreview, reactForm);
+
+  // for debug only
+
+  console.log(">>> ", reactForm);
+
+  newreview.save().then(
+    (result) => {
+      return res.json(result);
+    },
+
+    () => {
+      return res.send("problem adding new review");
+    }
+  );
+});
+
+
+
 
 
 
