@@ -91,7 +91,7 @@ router.get("/sneakers/:id", (req, res) => {
 // find and return a single user based upon id - not _id
 router.get("/comments/:id", (req, res) => {
   customElements.findOne({ id: req.params.id }).then(
-    (sneakersArray) => {
+    (commentsArray) => {
       res.json(commentsArray);
     },
     () => {
@@ -135,7 +135,7 @@ router.delete("/comments/:id", (req, res) => {
 // CREATE new 
 
 router.post("/sneakers", (req, res) => {
-  // create instance writer model
+  // create instance  model
 
   var newsneaker = new Sneakers();
   var reactForm = req.body;
