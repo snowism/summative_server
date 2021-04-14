@@ -9,6 +9,7 @@ var SneakersSchema = new Schema(
     filepath: String,
     colour: String,
     price: String,
+    
   },
   {
     timestamps: true,
