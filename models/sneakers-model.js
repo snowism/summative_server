@@ -8,7 +8,8 @@ var SneakersSchema = new Schema(
     id: String,
     filepath: String,
     colour: String,
-    price: String,
+    newprice: String,
+    oldprice: String,
     
   },
   {

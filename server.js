@@ -193,6 +193,39 @@ router.post("/comments", (req, res) => {
 
 
 
+// UPDATE product by id
+router.put("/sneakers/:id", (req, res) => {
+  console.log("hey");
+  Sneakers.findOne({ id: req.params.id }, function (err, objFromMongoDB) {
+    if (err)
+      return res.json({
+        result: false,
+      });
+
+    var data = req.body;
+    console.log(data)
+
+    if (objFromMongoDB === null) {
+      return res.json({
+        result: false,
+      });
+    }
+    Object.assign(objFromMongoDB, data);
+    objFromMongoDB.save().then(
+      (response) => {
+        res.json({
+          result: response,
+        });
+      },
+      (error) => {
+        res.json({
+          result: false,
+        });
+      }
+    );
+  });
+});
+// end UPDATE product by id
 
 
 // catch bad endpoints on the api route only
